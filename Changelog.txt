@@ -1,0 +1,78 @@
+// DWH project changelog
+
+// v 0.0
+- Established project structure
+- .csv files are added to .gitignore
+
+// v 0.1
+- Attached BL_3NF Loading Procedures for each table
+- Attached BL_3NF DDL loading procedure
+- Attached BL_DM DDL loading procedure
+- Attached BL_3NF DDL for each table
+- Attached BL_DM DDL for each table
+- Created 'Tests' folder with placeholder.sql file
+- Added WRK folder to BL_CL to store WRK tables-related scripts
+- Attached wrk_customers_refresh() script
+
+// v 0.2
+- Added this changelog file to git repository
+- Attached BL_DM Loading Procedures for each table
+
+// v 0.3
+- Added procedures that reload SRC_ tables with data from any desired csv file on disk
+- 4 hours on transactions in postgreSQL procedures. Mini report sent to pg_topic_08 conversation. Still planning on doing something with it in the master procedure.
+
+// v 0.4
+- Fixed BL_3NF & BL_DM DDL loading procedure error when loading procedure with `with_drop` := TRUE option
+- Added 3NF Layer-level master procedure
+- Sources are rounded to 1M and 500K rows each
+- Increments for both sources are prepared
+- Added step-by-step report of creating increments and rounding sources sizes
+- Added `ce_companies_load` procedure (in addition to a function)
+- Removed currval column from the `prm_mta_incremental_load` table due to unstable performance.
+- Updated ce_sales() procedure & 3NF DDL load master procedure. Yet another problem with JOINS. Now fixed.
+- Transactions (COMMIT per procedure call) Successfully implemented in the layer-level master procedures.
+
+// v 0.5
+- Updated SCD-2 Logic for CE_CUSTOMERS_SCD table. Changing Data CTE was used.
+- PLANNED: Add LAST_SEEN logic instead of CURRENT_DATE.
+- Added DM Layer-level master procedure
+- Added automated partitioning functionality in the FCT Sales loading procedure
+- Added DWH Master Procedure
+- Multiple minor fixes
+- PLANNED: Edit SRC_ loading procedures. The Master procedure hangs because of incremental load logic.
+
+// v 0.6 
+- SRC_ loading procedures updated with the new logic
+- Deduplication process of one of the sources is added to the Increment_creation.ipynb
+
+// v 0.7
+- Updated Master DDL scripts
+- Created backups of previous SRC_ tables load logic.
+- Fixed dim_stores procedure
+- Created backup of previous SCD-2 logic.
+- Twice checked duplication in each table, especially SCD-2 and Fact table
+- PLANNED: Queries for duplication checks and other stuff will be added to Test scripts
+
+// v 0.8
+- Resolved issue with procedure refreshing: If one of the procedures further up the hierarchy is not updated, cached version will be use, thus missing changes to the ground-level procedures.
+- Changed FCT Sales load logic from Flush+Reload to EXCEPT (no need to worry about VACUUM!)
+- Updated DIM_CUSTOMERS_SCD load logic from Flush+Reload to Anti-Join (WHERE NOT EXISTS) - Much faster.
+- Tedious Testing for uniqueness and duplicates
+- PLANNED/LEFT: Testing table, business presentation & SCD-1 Logic
+
+// v 0.9
+- Established mini testing ecosystem, consisting only of 2 dwh-wide tests - duplicates and data loss.
+- Small fix of dim_payment_methods (it was loading default row from bl_3nf layer)
+- Added testing master procedure to the Master Procedure Script (as center of operations)
+
+// v 1.0
+- Testing procedures minor fixes
+- New DIM_CUSTOMERS_SCD update logic
+
+// v 1.1
+- Additional Sugaring / public repo preparations
+- Added source transformation procedures to Data Sources folder
+- Added Readme file
+
+
